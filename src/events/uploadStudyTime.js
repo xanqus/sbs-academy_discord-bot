@@ -1,17 +1,17 @@
 const customAxios = require('../async-func/customAxios')
 const getDate = require('../util/getDate')
 const { MessageEmbed } = require('discord.js')
-const { studyTimeUploadChannelIds } = require('../../config.json')
+const { studyTimeUploadChannelIds, A20220512 } = require('../../config.json')
 
 module.exports = {
   name: 'interactionCreate',
   async execute(interaction) {
-    console.log(interaction)
     if (!interaction.isModalSubmit()) return
     if (
       interaction.customId === 'studyTimeUploader' &&
       studyTimeUploadChannelIds.includes(interaction.channelId)
     ) {
+      let lecturId = -1
       const videoTime = interaction.fields.getTextInputValue('videoTimeInput')
       const youtubeWatchCount = interaction.fields.getTextInputValue(
         'youtubeWatchCountInput'
@@ -21,12 +21,17 @@ module.exports = {
       const blogUploadCount = interaction.fields.getTextInputValue(
         'blogUploadCountInput'
       )
+      if (A20220512.includes(interaction.user.id)) {
+        lectureId = 'A20220512'
+      }
+
       const data = {
         discordId: interaction.user.id,
         videoTime,
         youtubeWatchCount,
         baekjoonTime,
         blogUploadCount,
+        lectureId,
       }
 
       customAxios({
@@ -60,7 +65,7 @@ module.exports = {
             value:
               baekjoonTime >= 5
                 ? baekjoonTime >= 10
-                  ? `\`\`\`md\#- ${baekjoonTime}시간\`\`\``
+                  ? `\`\`\`md\n#- ${baekjoonTime}시간\`\`\``
                   : `\`\`\`diff\n- ${baekjoonTime}시간\`\`\``
                 : `\`\`\`\n- ${baekjoonTime}시간\`\`\``,
           },

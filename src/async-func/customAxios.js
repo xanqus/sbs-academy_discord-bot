@@ -3,6 +3,7 @@ const { backend_url } = require('../../config.json')
 
 module.exports = async parameter => {
   try {
+    console.log(parameter)
     const data = await axios({
       method: 'post',
       url: backend_url + parameter.param,
