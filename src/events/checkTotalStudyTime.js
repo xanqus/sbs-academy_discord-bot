@@ -1,10 +1,10 @@
-const customAxios = require('../async-func/customAxios')
+const sendData = require('../customAxios/sendData')
 
 module.exports = {
   name: 'interactionCreate',
   async execute(interaction) {
     if (interaction.commandName !== '얼마나_공부했을까') return
-    const totalTime = await customAxios({
+    const totalTime = await sendData({
       param: `/studytime/${interaction.user.id}`,
     })
     try {

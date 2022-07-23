@@ -1,5 +1,5 @@
 const { lectureIDs } = require('../../config.json')
-const customAxios = require('../async-func/customAxios')
+const sendData = require('../customAxios/sendData')
 
 module.exports = {
   name: 'interactionCreate',
@@ -9,6 +9,7 @@ module.exports = {
 
     const studentName = interaction.fields.getTextInputValue('studentNameInput')
     const lectureID = interaction.fields.getTextInputValue('lectureIDInput')
+
     if (!lectureIDs.includes(lectureID))
       return await interaction.reply({ content: '강의ID를 확인해주세요.' })
 
@@ -18,7 +19,7 @@ module.exports = {
       discordID: interaction.user.id,
     }
 
-    customAxios({
+    sendData({
       data: data,
       param: '/user',
     })

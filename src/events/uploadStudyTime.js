@@ -1,11 +1,8 @@
-const customAxios = require('../async-func/customAxios')
+const sendData = require('../customAxios/sendData')
+const getUserInfo = require('../customAxios/getUserInfo')
 const getDate = require('../util/getDate')
 const { MessageEmbed } = require('discord.js')
-const {
-  studyTimeUploadChannelIDs,
-  A20220512,
-  I20220712,
-} = require('../../config.json')
+const { studyTimeUploadChannelIDs, lectureIDs } = require('../../config.json')
 
 module.exports = {
   name: 'interactionCreate',
@@ -14,7 +11,8 @@ module.exports = {
     if (interaction.customId !== 'studyTimeUploader') return
 
     if (studyTimeUploadChannelIDs.includes(interaction.channelId)) {
-      let lectureID = -1
+      let userInfo = await getUserInfo(interaction.user.id)
+      let lectureID = userInfo ? userInfo.data.lectureID : -1
       const videoTime = interaction.fields.getTextInputValue('videoTimeInput')
       const youtubeWatchCount = interaction.fields.getTextInputValue(
         'youtubeWatchCountInput'
@@ -24,11 +22,10 @@ module.exports = {
       const blogUploadCount = interaction.fields.getTextInputValue(
         'blogUploadCountInput'
       )
-      if (A20220512.includes(interaction.user.id)) {
-        lectureID = 'A20220512'
-      }
-      if (I20220712.includes(interaction.user.id)) {
-        lectureID = 'I20220712'
+      if (!lectureIDs.includes(lectureID)) {
+        return await interaction.reply({
+          content: '등록되지 않은 사용자입니다.',
+        })
       }
 
       if (
@@ -48,7 +45,7 @@ module.exports = {
         lectureID,
       }
 
-      customAxios({
+      sendData({
         data: data,
         param: '/studytime',
       })
