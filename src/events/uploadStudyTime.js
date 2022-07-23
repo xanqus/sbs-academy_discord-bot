@@ -7,11 +7,10 @@ module.exports = {
   name: 'interactionCreate',
   async execute(interaction) {
     if (!interaction.isModalSubmit()) return
-    if (
-      interaction.customId === 'studyTimeUploader' &&
-      studyTimeUploadChannelIds.includes(interaction.channelId)
-    ) {
-      let lecturId = -1
+    if (interaction.customId !== 'studyTimeUploader') return
+
+    if (studyTimeUploadChannelIds.includes(interaction.channelId)) {
+      let lectureID = -1
       const videoTime = interaction.fields.getTextInputValue('videoTimeInput')
       const youtubeWatchCount = interaction.fields.getTextInputValue(
         'youtubeWatchCountInput'
@@ -22,16 +21,24 @@ module.exports = {
         'blogUploadCountInput'
       )
       if (A20220512.includes(interaction.user.id)) {
-        lectureId = 'A20220512'
+        lectureID = 'A20220512'
       }
 
+      if (
+        isNaN(videoTime) ||
+        isNaN(youtubeWatchCount) ||
+        isNaN(baekjoonTime) ||
+        isNaN(blogUploadCount)
+      )
+        return await interaction.reply({ content: '항목이 숫자여야합니다.' })
+
       const data = {
-        discordId: interaction.user.id,
+        discordID: interaction.user.id,
         videoTime,
         youtubeWatchCount,
         baekjoonTime,
         blogUploadCount,
-        lectureId,
+        lectureID,
       }
 
       customAxios({

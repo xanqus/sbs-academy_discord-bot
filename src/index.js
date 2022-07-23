@@ -34,8 +34,6 @@ for (const file of eventFiles) {
   }
 }
 
-client.on('interactionCreate', async interaction => {})
-
 // When the client is ready, run this code (only once)
 client.once('ready', c => {})
 
@@ -45,15 +43,26 @@ client.on('interactionCreate', async interaction => {
   const command = client.commands.get(interaction.commandName)
 
   if (!command) return
-
-  try {
-    await command.execute(interaction)
-  } catch (error) {
-    console.error(error)
-    await interaction.reply({
-      content: 'There was an error while executing this command!',
-      ephemeral: true,
-    })
+  if (interaction.commandName === '사용자등록') {
+    try {
+      await command.execute(interaction)
+    } catch (error) {
+      console.error(error)
+      await interaction.reply({
+        content: 'There was an error while executing this command!',
+        ephemeral: true,
+      })
+    }
+  } else if (interaction.commandName === '공부시간') {
+    try {
+      await command.execute(interaction)
+    } catch (error) {
+      console.error(error)
+      await interaction.reply({
+        content: 'There was an error while executing this command!',
+        ephemeral: true,
+      })
+    }
   }
 })
 

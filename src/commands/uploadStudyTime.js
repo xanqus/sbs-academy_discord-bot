@@ -6,6 +6,8 @@ module.exports = {
     .setName('공부시간')
     .setDescription('공부시간'),
   async execute(interaction) {
+    if (interaction.modalSubmit) return
+    if (interaction.commandName !== '공부시간') return
     const modal = new Modal()
       .setCustomId('studyTimeUploader')
       .setTitle('공부시간을 업로드해주세요!')
