@@ -76,7 +76,7 @@ module.exports = {
             value:
               baekjoonTime >= 5
                 ? baekjoonTime >= 10
-                  ? `\`\`\`md\n#- ${baekjoonTime}시간\`\`\``
+                  ? `\`\`\`md\n# ${baekjoonTime}시간\`\`\``
                   : `\`\`\`diff\n- ${baekjoonTime}시간\`\`\``
                 : `\`\`\`\n- ${baekjoonTime}시간\`\`\``,
           },
