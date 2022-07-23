@@ -94,12 +94,18 @@ module.exports = {
           }
         )
         .setTitle(
-          `${interaction.member.nickname}님의 ${await getDate(
-            new Date()
-          )} 공부시간 입니다.`
+          `${
+            interaction.member.nickname
+              ? interaction.member.nickname
+              : interaction.user.username
+          }님의 ${await getDate(new Date())} 공부시간 입니다.`
         )
         .setAuthor({
-          name: `${interaction.member.nickname}`,
+          name: `${
+            interaction.member.nickname
+              ? interaction.member.nickname
+              : interaction.user.username
+          }`,
           iconURL: `https://cdn.discordapp.com/avatars/${interaction.member.user.id}/${interaction.member.user.avatar}.png`,
         })
         .setTimestamp()
