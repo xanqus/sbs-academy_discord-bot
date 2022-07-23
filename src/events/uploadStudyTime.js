@@ -1,7 +1,11 @@
 const customAxios = require('../async-func/customAxios')
 const getDate = require('../util/getDate')
 const { MessageEmbed } = require('discord.js')
-const { studyTimeUploadChannelIds, A20220512 } = require('../../config.json')
+const {
+  studyTimeUploadChannelIDs,
+  A20220512,
+  I20220712,
+} = require('../../config.json')
 
 module.exports = {
   name: 'interactionCreate',
@@ -9,7 +13,7 @@ module.exports = {
     if (!interaction.isModalSubmit()) return
     if (interaction.customId !== 'studyTimeUploader') return
 
-    if (studyTimeUploadChannelIds.includes(interaction.channelId)) {
+    if (studyTimeUploadChannelIDs.includes(interaction.channelId)) {
       let lectureID = -1
       const videoTime = interaction.fields.getTextInputValue('videoTimeInput')
       const youtubeWatchCount = interaction.fields.getTextInputValue(
@@ -22,6 +26,9 @@ module.exports = {
       )
       if (A20220512.includes(interaction.user.id)) {
         lectureID = 'A20220512'
+      }
+      if (I20220712.includes(interaction.user.id)) {
+        lectureID = 'I20220712'
       }
 
       if (

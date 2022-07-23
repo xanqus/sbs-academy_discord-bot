@@ -3,7 +3,7 @@ const fs = require('node:fs')
 const path = require('node:path')
 const { REST } = require('@discordjs/rest')
 const { Routes } = require('discord-api-types/v9')
-const { clientId, guildId, token } = require('../config.json')
+const { clientID, guildIDs, token } = require('../config.json')
 
 // command 등록 예시
 // const commands = [
@@ -33,7 +33,13 @@ for (const file of commandFiles) {
 
 const rest = new REST({ version: '9' }).setToken(token)
 
-rest
-  .put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
-  .then(() => console.log('Successfully registered application commands.'))
-  .catch(console.error)
+guildIDs.forEach(guildID => {
+  rest
+    .put(Routes.applicationGuildCommands(clientID, guildID), { body: commands })
+    .then(() =>
+      console.log(
+        `Successfully registered application commands. guildID: ${guildID}`
+      )
+    )
+    .catch(console.error)
+})
