@@ -1,31 +1,31 @@
-const sendData = require('../customAxios/sendData')
-const getUserInfo = require('../customAxios/getUserInfo')
-const getDate = require('../util/getDate')
-const { MessageEmbed } = require('discord.js')
-const { studyTimeUploadChannelIDs, lectureIDs } = require('../../config.json')
+const sendData = require("../customAxios/sendData");
+const getUserInfo = require("../customAxios/getUserInfo");
+const getDate = require("../util/getDate");
+const { MessageEmbed } = require("discord.js");
+const { studyTimeUploadChannelIDs, lectureIDs } = require("../../config.json");
 
 module.exports = {
-  name: 'interactionCreate',
+  name: "interactionCreate",
   async execute(interaction) {
-    if (!interaction.isModalSubmit()) return
-    if (interaction.customId !== 'studyTimeUploader') return
+    if (!interaction.isModalSubmit()) return;
+    if (interaction.customId !== "studyTimeUploader") return;
 
     if (studyTimeUploadChannelIDs.includes(interaction.channelId)) {
-      let userInfo = await getUserInfo(interaction.user.id)
-      let lectureID = userInfo ? userInfo.data.lectureID : -1
-      const videoTime = interaction.fields.getTextInputValue('videoTimeInput')
+      let userInfo = await getUserInfo(interaction.user.id);
+      let lectureID = userInfo ? userInfo.data.lectureID : -1;
+      const videoTime = interaction.fields.getTextInputValue("videoTimeInput");
       const youtubeWatchCount = interaction.fields.getTextInputValue(
-        'youtubeWatchCountInput'
-      )
+        "youtubeWatchCountInput"
+      );
       const baekjoonTime =
-        interaction.fields.getTextInputValue('baekjoonTimeInput')
+        interaction.fields.getTextInputValue("baekjoonTimeInput");
       const blogUploadCount = interaction.fields.getTextInputValue(
-        'blogUploadCountInput'
-      )
+        "blogUploadCountInput"
+      );
       if (!lectureIDs.includes(lectureID)) {
         return await interaction.reply({
-          content: '등록되지 않은 사용자입니다.',
-        })
+          content: "등록되지 않은 사용자입니다.",
+        });
       }
 
       if (
@@ -34,7 +34,7 @@ module.exports = {
         isNaN(baekjoonTime) ||
         isNaN(blogUploadCount)
       )
-        return await interaction.reply({ content: '항목이 숫자여야합니다.' })
+        return await interaction.reply({ content: "항목이 숫자여야합니다." });
 
       const data = {
         discordID: interaction.user.id,
@@ -43,18 +43,18 @@ module.exports = {
         baekjoonTime,
         blogUploadCount,
         lectureID,
-      }
+      };
 
       sendData({
         data: data,
-        param: '/studytime',
-      })
+        param: "/studytime",
+      });
 
       // inside a command, event listener, etc.
       const embed = new MessageEmbed()
         .addFields(
           {
-            name: '영상시간',
+            name: "영상시간",
             value:
               videoTime >= 5
                 ? videoTime >= 10
@@ -63,7 +63,7 @@ module.exports = {
                 : `\`\`\`\n- ${videoTime}시간\`\`\``,
           },
           {
-            name: '유튜브 시청 수',
+            name: "유튜브 시청 수",
             value:
               youtubeWatchCount >= 5
                 ? youtubeWatchCount >= 10
@@ -72,7 +72,7 @@ module.exports = {
                 : `\`\`\`\n- ${youtubeWatchCount}개\`\`\``,
           },
           {
-            name: '백준 공부시간',
+            name: "백준 공부시간",
             value:
               baekjoonTime >= 5
                 ? baekjoonTime >= 10
@@ -81,7 +81,7 @@ module.exports = {
                 : `\`\`\`\n- ${baekjoonTime}시간\`\`\``,
           },
           {
-            name: '블로그 글 업로드 수',
+            name: "블로그 글 업로드 수",
             value:
               blogUploadCount >= 5
                 ? blogUploadCount >= 10
@@ -105,42 +105,55 @@ module.exports = {
           }`,
           iconURL: `https://cdn.discordapp.com/avatars/${interaction.member.user.id}/${interaction.member.user.avatar}.png`,
         })
-        .setTimestamp()
+        .setTimestamp();
       if (
-        videoTime >= 5 ||
-        youtubeWatchCount >= 5 ||
-        baekjoonTime >= 5 ||
-        blogUploadCount >= 5
+        videoTime >= 3 ||
+        youtubeWatchCount >= 3 ||
+        baekjoonTime >= 3 ||
+        blogUploadCount >= 3
       ) {
         if (
-          videoTime >= 10 ||
-          youtubeWatchCount >= 10 ||
-          baekjoonTime >= 10 ||
-          blogUploadCount >= 10
+          videoTime >= 6 ||
+          youtubeWatchCount >= 6 ||
+          baekjoonTime >= 6 ||
+          blogUploadCount >= 6
         ) {
-          embed.setColor('#9ceeff')
-          await interaction.reply({
-            content: `공부시간 업로드가 완료되었습니다.\n공부를 정말 많이하셨네요 ${interaction.member.nickname}님.\n10개(시간)이상인 항목이 있습니다!!!`,
-            embeds: [embed],
-          })
+          if (
+            videoTime >= 9 ||
+            youtubeWatchCount >= 9 ||
+            baekjoonTime >= 9 ||
+            blogUploadCount >= 9
+          ) {
+            embed.setColor("#5710e6");
+            await interaction.reply({
+              content: `공부시간 업로드가 완료되었습니다.\n공부를 정말 많이하셨네요 ${interaction.member.nickname}님.\n9개(시간)이상인 항목이 있습니다!!!`,
+              embeds: [embed],
+            });
+          } else {
+            embed.setColor("#9ceeff");
+            await interaction.reply({
+              content: `공부시간 업로드가 완료되었습니다.\n공부를 꽤 많이하셨네요 ${interaction.member.nickname}님.\n6개(시간)이상인 항목이 있습니다!!!`,
+              embeds: [embed],
+            });
+          }
         } else {
-          embed.setColor('#ff6969')
+          embed.setColor("#ff6969");
           await interaction.reply({
-            content: `공부시간 업로드가 완료되었습니다.\n공부를 많이하셨네요 ${interaction.member.nickname}님.\n5개(시간)이상인 항목이 있습니다!!!`,
+            content: `공부시간 업로드가 완료되었습니다.\n공부를 많이하셨네요 ${interaction.member.nickname}님.\n3개(시간)이상인 항목이 있습니다!!!`,
             embeds: [embed],
-          })
+          });
         }
       } else {
-        embed.setColor('#808080')
+        embed.setColor("#808080");
         await interaction.reply({
-          content: '공부시간 업로드가 완료되었습니다.',
+          content: "공부시간 업로드가 완료되었습니다.",
           embeds: [embed],
-        })
+        });
       }
     } else {
       await interaction.reply({
-        content: '공부시간-업로드채널에서 업로드해주세요.',
-      })
+        content: "공부시간-업로드채널에서 업로드해주세요.",
+      });
     }
   },
-}
+};
