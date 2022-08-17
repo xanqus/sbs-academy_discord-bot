@@ -56,8 +56,8 @@ module.exports = {
           {
             name: "영상시간",
             value:
-              videoTime >= 5
-                ? videoTime >= 10
+              videoTime >= 6
+                ? videoTime >= 9
                   ? `\`\`\`md\n# ${videoTime}시간\`\`\``
                   : `\`\`\`diff\n- ${videoTime}시간\`\`\``
                 : `\`\`\`\n- ${videoTime}시간\`\`\``,
@@ -65,8 +65,8 @@ module.exports = {
           {
             name: "유튜브 시청 수",
             value:
-              youtubeWatchCount >= 5
-                ? youtubeWatchCount >= 10
+              youtubeWatchCount >= 6
+                ? youtubeWatchCount >= 9
                   ? `\`\`\`md\n# ${youtubeWatchCount}개\`\`\``
                   : `\`\`\`diff\n- ${youtubeWatchCount}개\`\`\``
                 : `\`\`\`\n- ${youtubeWatchCount}개\`\`\``,
@@ -74,8 +74,8 @@ module.exports = {
           {
             name: "백준 공부시간",
             value:
-              baekjoonTime >= 5
-                ? baekjoonTime >= 10
+              baekjoonTime >= 6
+                ? baekjoonTime >= 9
                   ? `\`\`\`md\n# ${baekjoonTime}시간\`\`\``
                   : `\`\`\`diff\n- ${baekjoonTime}시간\`\`\``
                 : `\`\`\`\n- ${baekjoonTime}시간\`\`\``,
@@ -83,8 +83,8 @@ module.exports = {
           {
             name: "블로그 글 업로드 수",
             value:
-              blogUploadCount >= 5
-                ? blogUploadCount >= 10
+              blogUploadCount >= 6
+                ? blogUploadCount >= 9
                   ? `\`\`\`md\n# ${blogUploadCount}개\`\`\``
                   : `\`\`\`diff\n- ${blogUploadCount}개\`\`\``
                 : `\`\`\`\n- ${blogUploadCount}개\`\`\``,
@@ -124,20 +124,20 @@ module.exports = {
             baekjoonTime >= 9 ||
             blogUploadCount >= 9
           ) {
-            embed.setColor("#5710e6");
+            embed.setColor("#9ceeff");
             await interaction.reply({
               content: `공부시간 업로드가 완료되었습니다.\n공부를 정말 많이하셨네요 ${interaction.member.nickname}님.\n9개(시간)이상인 항목이 있습니다!!!`,
               embeds: [embed],
             });
           } else {
-            embed.setColor("#9ceeff");
+            embed.setColor("#ff6969");
             await interaction.reply({
               content: `공부시간 업로드가 완료되었습니다.\n공부를 꽤 많이하셨네요 ${interaction.member.nickname}님.\n6개(시간)이상인 항목이 있습니다!!!`,
               embeds: [embed],
             });
           }
         } else {
-          embed.setColor("#ff6969");
+          embed.setColor("#b7f79c");
           await interaction.reply({
             content: `공부시간 업로드가 완료되었습니다.\n공부를 많이하셨네요 ${interaction.member.nickname}님.\n3개(시간)이상인 항목이 있습니다!!!`,
             embeds: [embed],
