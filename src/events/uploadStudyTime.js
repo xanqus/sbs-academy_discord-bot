@@ -56,38 +56,46 @@ module.exports = {
           {
             name: "영상시간",
             value:
-              videoTime >= 6
-                ? videoTime >= 9
-                  ? `\`\`\`md\n# ${videoTime}시간\`\`\``
-                  : `\`\`\`diff\n- ${videoTime}시간\`\`\``
+              videoTime >= 3
+                ? videoTime >= 6
+                  ? videoTime >= 9
+                    ? `\`\`\`md\n# ${videoTime}시간\`\`\``
+                    : `\`\`\`diff\n- ${videoTime}시간\`\`\``
+                  : `\`\`\`diff\n+ ${videoTime}시간\`\`\``
                 : `\`\`\`\n- ${videoTime}시간\`\`\``,
           },
           {
             name: "유튜브 시청 수",
             value:
-              youtubeWatchCount >= 6
-                ? youtubeWatchCount >= 9
-                  ? `\`\`\`md\n# ${youtubeWatchCount}개\`\`\``
-                  : `\`\`\`diff\n- ${youtubeWatchCount}개\`\`\``
-                : `\`\`\`\n- ${youtubeWatchCount}개\`\`\``,
+              youtubeWatchCount >= 3
+                ? youtubeWatchCount >= 6
+                  ? youtubeWatchCount >= 9
+                    ? `\`\`\`md\n# ${youtubeWatchCount}시간\`\`\``
+                    : `\`\`\`diff\n- ${youtubeWatchCount}시간\`\`\``
+                  : `\`\`\`diff\n+ ${youtubeWatchCount}시간\`\`\``
+                : `\`\`\`\n- ${youtubeWatchCount}시간\`\`\``,
           },
           {
             name: "백준 공부시간",
             value:
-              baekjoonTime >= 6
-                ? baekjoonTime >= 9
-                  ? `\`\`\`md\n# ${baekjoonTime}시간\`\`\``
-                  : `\`\`\`diff\n- ${baekjoonTime}시간\`\`\``
+              baekjoonTime >= 3
+                ? baekjoonTime >= 6
+                  ? baekjoonTime >= 9
+                    ? `\`\`\`md\n# ${baekjoonTime}시간\`\`\``
+                    : `\`\`\`diff\n- ${baekjoonTime}시간\`\`\``
+                  : `\`\`\`diff\n+ ${baekjoonTime}시간\`\`\``
                 : `\`\`\`\n- ${baekjoonTime}시간\`\`\``,
           },
           {
             name: "블로그 글 업로드 수",
             value:
-              blogUploadCount >= 6
-                ? blogUploadCount >= 9
-                  ? `\`\`\`md\n# ${blogUploadCount}개\`\`\``
-                  : `\`\`\`diff\n- ${blogUploadCount}개\`\`\``
-                : `\`\`\`\n- ${blogUploadCount}개\`\`\``,
+              blogUploadCount >= 3
+                ? blogUploadCount >= 6
+                  ? blogUploadCount >= 9
+                    ? `\`\`\`md\n# ${blogUploadCount}시간\`\`\``
+                    : `\`\`\`diff\n- ${blogUploadCount}시간\`\`\``
+                  : `\`\`\`diff\n+ ${blogUploadCount}시간\`\`\``
+                : `\`\`\`\n- ${blogUploadCount}시간\`\`\``,
           }
         )
         .setTitle(
